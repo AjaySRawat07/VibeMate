@@ -1,8 +1,9 @@
 require("dotenv").config();
 const express = require("express");
-const userRouter = require("./src/routes/user.route");
+const {authRouter,profileRouter,rmRouter} = require("./src/routes/user/all.route");
+const requestRouter = require("./src/routes/connection/sendConnection");
 const connectToDB = require("./src/config/db");
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -10,8 +11,15 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api/t1/user",userRouter);
+// user related API 
+app.use("/api/t1/app",authRouter);
+app.use("/api/t2/user",profileRouter);
+app.use("/api/t3/del",rmRouter);
 
+// connection API
+app.use("/api/v1",requestRouter);
+
+// mongoose connection
 connectToDB()
 .then(() => console.log("DB connected successfully"))
 .catch((err) => console.log("Error DB connection : ", err));

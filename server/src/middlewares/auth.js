@@ -14,7 +14,7 @@ const userAuth = async(req,res,next) =>{
 
         const {_id} = decodeToken;
 
-        const user = UserModel.findById(_id);
+        const user = await UserModel.findById(_id);
         if(!user){
             throw new Error("User not found");
         }   
