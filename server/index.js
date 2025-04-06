@@ -4,6 +4,8 @@ const {authRouter,profileRouter,rmRouter} = require("./src/routes/user/all.route
 const requestRouter = require("./src/routes/connection/sendConnection");
 const connectToDB = require("./src/config/db");
 const cookieParser = require('cookie-parser');
+const connectionBox = require("./src/routes/connection/connectionBox");
+const usersRouter = require("./src/routes/connection/friend.reqs");
 
 const app = express();
 
@@ -17,7 +19,9 @@ app.use("/api/t2/user",profileRouter);
 app.use("/api/t3/del",rmRouter);
 
 // connection API
-app.use("/api/v1",requestRouter);
+app.use("/api/v1", requestRouter);
+app.use("/api/v2", connectionBox);
+app.use("/api/v3", usersRouter);
 
 // mongoose connection
 connectToDB()

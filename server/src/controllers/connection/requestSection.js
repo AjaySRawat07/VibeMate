@@ -3,7 +3,6 @@ const UserModel = require("../../models/user.model");
 
 const requestSection = async(req,res) =>{
     try{
-        console.log(req.user)
         const fromUserId = req.user;
         const toUserId = req.params.toUserId;
         const status = req.params.status;
