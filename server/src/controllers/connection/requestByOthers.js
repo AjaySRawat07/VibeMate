@@ -1,4 +1,5 @@
 const connectionModel = require("../../models/connectionRequest.model");
+const UserModel = require("../../models/user.model");
 
 const USER_SAFE_EXE = "firstName lastName photoURL about skills ";
 
@@ -52,7 +53,38 @@ const userFriendsSection = async(req,res) =>{
     }
 }
 
+const userFeedContainer = async(req,res) =>{
+    try{
+        const loggedInUser = req.user;
+
+        const connectionRequests = await connectionModel.find({
+            $or : [{fromUserId : loggedInUser._id}, {toUserId : loggedInUser._id}],
+        }).select("fromUserId toUserId");
+
+        // not adding those user in feed whom you already with any type of connection
+        const hideUserFromFeed = new Set();
+        connectionRequests.forEach((req) => {
+            hideUserFromFeed.add(req.fromUserId.toString());
+            hideUserFromFeed.add(req.toUserId.toString());
+        })
+        console.log(hideUserFromFeed);
+
+        const user = await UserModel.find({
+            $and : [
+              { _id : {$nin : Array.from(hideUserFromFeed)}}, // $nin => not in this array
+              { _id : {$ne : loggedInUser._id}} // $ne => not a loggin user
+            ]
+        }).select(USER_SAFE_EXE);
+
+        res.send(user);
+    }
+    catch(error){
+        console.error("Error in userFeedContainer : ", error.message);
+    }
+}
+
 module.exports = {
     reqRecivedOfOthers,
-    userFriendsSection
+    userFriendsSection,
+    userFeedContainer
 };
