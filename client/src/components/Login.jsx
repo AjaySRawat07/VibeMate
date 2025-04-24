@@ -1,27 +1,35 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/userSlice";
+import { useNavigate } from "react-router";
+import { BASE_URL1 } from "../utils/constants";
 
 const Login = () => {
   const [email, setEmail] = useState("john@wick.com");
   const [password, setPassword] = useState("John@123");
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   async function handleClick() {
     try {
-      const resp = await axios.post(
-        "http://localhost:5000/api/t1/app/login",
+      const res = await axios.post(
+        BASE_URL1 + "/login",
         {
           email,
           password,
         },
         { withCredentials: true }
       );
+      //   console.log(res.data.data);
+      dispatch(addUser(res.data.data));
+      return navigate("/");
     } catch (err) {
       console.error("Error in login UI : ", err);
     }
   }
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
-      <div className="card w-4/12 bg-base-200 shadow-sm p-7 flex justify-center items-center h-80">
+    <div className="flex justify-center items-center h-96">
+      <div className="card w-4/12 bg-base-200 shadow-sm p-7 flex justify-center items-center">
         <div className="font-bold text-2xl mb-10">Login</div>
         <label className="input validator my-4">
           <svg

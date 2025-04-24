@@ -66,9 +66,10 @@ const login = async (req, res) => {
     // console.log(token);
 
     res.cookie("token", token, { httpOnly: true });
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       message: "User login successfull",
+      data: user,
     });
   } catch (err) {
     console.error("Error will login : ", err.message);

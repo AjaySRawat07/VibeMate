@@ -10,10 +10,10 @@ function App() {
     <Fragment>
       <BrowserRouter basename="/">
         <Routes>
-          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Body />}>
+            <Route path="/" element={<Feed />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/feed" element={<Feed />} />
           </Route>
         </Routes>
       </BrowserRouter>
