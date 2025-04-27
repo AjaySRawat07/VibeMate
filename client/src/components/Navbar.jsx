@@ -1,15 +1,19 @@
 import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
-  console.log(user);
+  // console.log(user);
 
   return (
     <Fragment>
       <div className="navbar bg-accent">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">VibeMate</a>
+          <Link className="btn btn-ghost text-xl" to="/">
+            VibeMate
+          </Link>
         </div>
         {user && (
           <div className="flex justify-center items-center gap-2">
@@ -34,10 +38,9 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <a className="justify-between">
+                  <Link className="justify-between" to="/profile">
                     Profile
-                    <span className="badge">New</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a>Settings</a>
