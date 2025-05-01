@@ -8,8 +8,11 @@ import { BASE_URL1 } from "../utils/constants";
 const Login = () => {
   const [email, setEmail] = useState("john@wick.com");
   const [password, setPassword] = useState("John@123");
+  const [error, setError] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   async function handleClick() {
     try {
       const res = await axios.post(
@@ -20,13 +23,19 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      //   console.log(res.data.data);
+      if (!res.data.success) {
+        setError("Invalid credentials");
+        return; // 🚫 stop here if login failed
+      }
+
       dispatch(addUser(res.data.data));
       return navigate("/");
     } catch (err) {
+      setError(err?.response?.data);
       console.error("Error in login UI : ", err);
     }
   }
+
   return (
     <div className="flex justify-center items-center h-96">
       <div className="card w-4/12 bg-base-200 shadow-sm p-7 flex justify-center items-center">
@@ -83,6 +92,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
+        <p className="text-red-500 my-1.5">{error}</p>
         <button
           className="btn btn-ghost mt-10 bg-secondary"
           onClick={handleClick}

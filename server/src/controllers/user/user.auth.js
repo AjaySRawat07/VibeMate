@@ -45,6 +45,10 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    if (!email || !password) {
+      return res.status(422).send("all fields are required");
+    }
+
     const user = await UserModel.findOne({ email: email });
 
     if (!user) {
@@ -77,6 +81,8 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
+  const token = req.cookies?.token;
+
   if (!token) {
     res.json({
       success: false,

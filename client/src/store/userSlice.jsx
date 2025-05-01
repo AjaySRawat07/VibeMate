@@ -1,6 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = JSON.parse(localStorage.getItem("user") || null);
+const initialState = (() => {
+  try {
+    const item = localStorage.getItem("user");
+
+    if (!item || item === "undefined" || item === "null") {
+      return null;
+    }
+
+    return JSON.parse(item);
+  } catch (error) {
+    console.error("Error parsing user from localStorage", error);
+    return null;
+  }
+})();
 
 const userSlice = createSlice({
   name: "user",

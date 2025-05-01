@@ -1,11 +1,21 @@
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { removeUser } from "../store/userSlice";
+import axios from "axios";
+import { BASE_URL1 } from "../utils/constants";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((store) => store.user);
   // console.log(user);
+
+  const handleLogout = async () => {
+    await axios.post(BASE_URL1 + "/logout", {}, { withCredentials: true });
+    dispatch(removeUser());
+    return navigate("/login");
+  };
 
   return (
     <Fragment>
@@ -46,7 +56,9 @@ const Navbar = () => {
                   <a>Settings</a>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  <a onClick={handleLogout} className="hover:bg-red-500">
+                    Logout
+                  </a>
                 </li>
               </ul>
             </div>
