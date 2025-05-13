@@ -25,7 +25,7 @@ const Login = () => {
       );
       if (!res.data.success) {
         setError("Invalid credentials");
-        return; // 🚫 stop here if login failed
+        return;
       }
 
       dispatch(addUser(res.data.data));

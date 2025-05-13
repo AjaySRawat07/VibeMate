@@ -1,4 +1,3 @@
-// src/components/Feed.jsx
 import React, { useEffect } from "react";
 import FeedShimmer from "../utils/feedShimmerUi";
 import axios from "axios";
@@ -12,11 +11,12 @@ const Feed = () => {
   console.log(feed);
   const dispatch = useDispatch();
   const getFeed = async () => {
+    // if (feed && feed.length > 0) return;
     try {
       const res = await axios.get(BASE_URL3 + "/user/feed", {
         withCredentials: true,
       });
-      dispatch(addFeed(res?.data?.data || []));
+      dispatch(addFeed(res?.data));
     } catch (err) {
       console.error(err.message);
     }
@@ -26,7 +26,7 @@ const Feed = () => {
     getFeed();
   }, []);
 
-  return Array.isArray(feed) && feed.length > 0 ? (
+  return feed.length > 0 ? (
     <div className="flex justify-center items-center my-10">
       <UserCart user={feed[0]} />
     </div>

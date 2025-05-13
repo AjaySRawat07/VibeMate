@@ -15,10 +15,14 @@ var cors = require("cors");
 const corsOptions = {
   origin: "http://localhost:5173",
   credentials: true,
+  methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 const app = express();
+
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 // global middleware
 app.use(express.json());

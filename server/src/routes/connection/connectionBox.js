@@ -4,6 +4,10 @@ const connectionBoxList = require("../../controllers/connection/connectionBoxUse
 
 const connectionBox = express.Router();
 
-connectionBox.post("/request/send/:status/:requestId",userAuth, connectionBoxList);
+connectionBox.post(
+  "/request/send/:status/:requestId",
+  userAuth,
+  connectionBoxList
+);
 
 module.exports = connectionBox;
