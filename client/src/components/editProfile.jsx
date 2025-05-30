@@ -32,15 +32,17 @@ const EditProfile = ({ user }) => {
         },
         {
           withCredentials: true,
+          timeout: 2000,
         }
       );
-      dispatch(addUser(res?.data?.data));
+      dispatch(addUser(res.data.data));
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 3000);
     } catch (error) {
-      setError(error.response.data);
+      console.log("Error in save profile ", error);
+      setError(error?.message);
     }
   };
 
@@ -121,7 +123,7 @@ const EditProfile = ({ user }) => {
         <input
           type="submit"
           value="Submit"
-          className="btn"
+          className="btn bg-indigo-600"
           onClick={saveProfile}
         />
       </div>
@@ -130,7 +132,7 @@ const EditProfile = ({ user }) => {
         user={{ firstName, lastName, photoURL, age, about, skills, gender }}
       />
       {toast && (
-        <div className="toast toast-center toast-top m-16">
+        <div className="toast toast-bottom toast-start">
           <div className="alert alert-success">
             <span>Message sent successfully.</span>
           </div>
