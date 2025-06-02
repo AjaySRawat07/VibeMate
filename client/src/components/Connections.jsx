@@ -29,18 +29,27 @@ const Connections = () => {
 
   if (!connections) return;
 
-  if (connections.length === 0) return <h1>No Connection Found</h1>;
+  if (connections.length === 0)
+    return <h1 className="font-bold text-3xl">No Connection Found</h1>;
 
   return (
     <div className="flex flex-col justify-center items-center my-8">
-      <h1 className="font-bold text-3xl">Connections</h1>
+      <h1 className="font-bold text-3xl">Connection Requests</h1>
 
-      {connections.map((connection, id) => {
-        const { firstName, lastName, photoURL, age, gender, about, skills } =
-          connection;
+      {connections.map((connection) => {
+        const {
+          _id,
+          firstName,
+          lastName,
+          photoURL,
+          age,
+          gender,
+          about,
+          skills,
+        } = connection;
 
         return (
-          <div className="card card-side bg-base-300 shadow-sm m-10" key={id}>
+          <div className="card card-side bg-base-300 shadow-sm m-10" key={_id}>
             <figure>
               <img src={photoURL} alt="userPhoto" />
             </figure>
