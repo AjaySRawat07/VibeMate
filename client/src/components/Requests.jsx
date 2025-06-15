@@ -20,7 +20,7 @@ const Requests = () => {
           withCredentials: true,
         }
       );
-      console.log("Requested", res);
+      //   console.log("Requested", res);
       dispatch(removeRequest(_id));
     } catch (err) {}
   };

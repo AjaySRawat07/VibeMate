@@ -26,6 +26,20 @@ const Feed = () => {
     getFeed();
   }, []);
 
+  if (!feed) return;
+
+  if (feed.length <= 0) {
+    return (
+      <div className="flex flex-col justify-center items-center m-10">
+        <span className="loading loading-dots loading-xl p-10"></span>
+        <h1 className="text-2xl font-semibold text-red-300 italic">
+          {" "}
+          No new users found
+        </h1>
+      </div>
+    );
+  }
+
   return feed.length > 0 ? (
     <div className="flex justify-center items-center my-10">
       <UserCart user={feed[0]} />
