@@ -26,6 +26,7 @@ const profileEdit = async (req, res) => {
     if (false && !validateEditProfileData(req)) {
       throw new Error("Invalid Edit Request");
     }
+
     const loggedInUser = req.user;
 
     Object.keys(req.body).forEach((key) => {
@@ -34,12 +35,13 @@ const profileEdit = async (req, res) => {
 
     await loggedInUser.save();
 
-    res.json({
+    res.status(200).json({
       message: `${loggedInUser.firstName} profile updated successfully`,
       data: loggedInUser,
     });
   } catch (error) {
-    console.error("Error in profile editing: ", error.message);
+    console.error("Error in profile editing:", error.message);
+    res.status(500).json({ message: "Server error: " + error.message });
   }
 };
 

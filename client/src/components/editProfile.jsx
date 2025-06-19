@@ -10,9 +10,9 @@ const EditProfile = ({ user }) => {
   const [lastName, setLastName] = useState(user.lastName);
   const [age, setAge] = useState(user.age || "");
   const [photoURL, setPhotoURL] = useState(user.photoURL);
-  const [about, setAbout] = useState(user.about);
+  const [about, setAbout] = useState(user.about || "");
   const [skills, setSkills] = useState(user.skills || "");
-  const [gender, setGender] = useState(user.gender);
+  const [gender, setGender] = useState(user.gender || "");
   const [error, setError] = useState("");
   const [toast, setToast] = useState(false);
 
@@ -35,7 +35,7 @@ const EditProfile = ({ user }) => {
           timeout: 2000,
         }
       );
-      dispatch(addUser(res.data.data));
+      dispatch(addUser(res?.data?.data));
       setToast(true);
       setTimeout(() => {
         setToast(false);

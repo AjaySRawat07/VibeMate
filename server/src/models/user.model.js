@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minLength: 10,
-      maxLength: 10,
+      maxLength: 12,
       validate(value) {
         if (!validator.isMobilePhone(value)) {
           throw new Error("Invalid mobile number : ", value);

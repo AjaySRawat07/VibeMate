@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/userSlice";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { BASE_URL1 } from "../utils/constants";
 
 const Login = () => {
@@ -37,8 +37,8 @@ const Login = () => {
   }
 
   return (
-    <div className="flex justify-center items-center h-96">
-      <div className="card w-4/12 bg-base-200 shadow-sm p-7 flex justify-center items-center">
+    <div className="flex justify-center items-center h-96 mt-12">
+      <div className="card w-3/12 bg-base-200 shadow-sm p-7 flex justify-center items-center">
         <div className="font-bold text-2xl mb-10">Login</div>
         <label className="input validator my-4">
           <svg
@@ -93,6 +93,9 @@ const Login = () => {
           />
         </label>
         <p className="text-red-500 my-1.5">{error}</p>
+        <Link to="/signup">
+          <p className="text-blue-500">New User? Signup Here</p>
+        </Link>
         <button
           className="btn btn-ghost mt-10 bg-secondary"
           onClick={handleClick}

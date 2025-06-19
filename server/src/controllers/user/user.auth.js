@@ -20,7 +20,7 @@ const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    await UserModel.create({
+    const user = await UserModel.create({
       firstName,
       lastName,
       email,
@@ -28,9 +28,14 @@ const register = async (req, res) => {
       password: hashPassword,
       gender,
     });
+
+    const token = await user.getJWT();
+    res.cookie("token", token, { httpOnly: true });
+
     res.status(201).json({
       success: true,
       message: "User register successfully",
+      data: user,
     });
   } catch (err) {
     console.error("Error will registration..", err.message);
